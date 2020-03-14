@@ -1,9 +1,17 @@
-.title {
-  background: rgb(121, 242, 157);
+@import '../../component/style/color.less';
+
+body {
+  // background-color: #color[background];
+  background-color: rgba(239, 243, 246);
 }
 
-.login_form {
-  background-color: #E7EAED;
+.title {
+  color: #color[themeColor];
+}
+
+.div_login_form {
+  // background-color: rgba(231, 234, 237);
+  background-color: white;
   border-radius: 5px;
   padding: 60px;
 
@@ -14,4 +22,22 @@
   top: 50%;
   margin-left: -210px;
   margin-top: -210px;
+}
+
+.login_form {
+  background-color: transparent;
+  margin-top: 50px;
+  ;
+}
+
+.cp {
+  text-align: center;
+  color: #color[copyrightColor];
+
+  &:hover {
+    color: #color[themeColor];
+    cursor: default;
+  }
+
+
 }
