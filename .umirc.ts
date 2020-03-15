@@ -29,6 +29,20 @@ export default defineConfig({
         { path: '*', component: "@/pages/404" },
       ],
     },
+    {
+      path: '/test',
+      exact: false,
+      component: '@/layouts/commonLayouts',
+      routes: [
+        {
+          path: 'page1',
+          exact: true,
+          component: '@/pages/test/page1',
+        },
+        { path: 'pageDav', exact: true, component: '@/pages/test/pageDav' },
+        { path: '*', component: "@/pages/404" },
+      ],
+    },
     { path: '/template', exact: true, component: '@/pages/template/index' },
     { path: '/*', component: "@/pages/404" },
   ],
