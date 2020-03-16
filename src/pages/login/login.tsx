@@ -3,7 +3,7 @@ import { history, Link } from 'umi';
 import styles from './login.less';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, message } from 'antd';
 
 import store from '@/data/store';
 import { LoginUserName, LoginIsLogin, LoginToken } from '@/data/loginReducer';
@@ -25,34 +25,27 @@ const checkLogin = async (
     }),
   })
     .then(response => response.json())
-    .then(function(data) {
+    .then(function (data) {
       if (data.code == 0) {
-        //TODO 登录成功 缓存登录信息
         recordLoginInfo(username, temp_token);
-        cacheLoginInfo(username, temp_token);
+        // cacheLoginInfo(username, temp_token);
+        message.info("登录成功");
         return true;
       } else {
         if (data.msg != undefined) {
           console.log(data.msg);
+          message.warn(data.msg);
         }
         clearLoginInfo();
         return false;
       }
     })
-    .catch(function(e) {
+    .catch(function (e) {
       console.log(e);
+      message.error(e);
       clearLoginInfo();
       return false;
     });
-};
-
-/**
- * 检查缓存的登录信息
- */
-const checkLoginHis = async (): Promise<boolean> => {
-  //TODO 检查localStorage中存储的登录信息,如果存在则验证并缓存
-  // recordLoginInfo("yuansong", temp_token);
-  return false;
 };
 
 /**
@@ -65,16 +58,6 @@ const recordLoginInfo = (username: string, token: string) => {
   store.dispatch(LoginUserName(username));
   store.dispatch(LoginIsLogin(true));
   store.dispatch(LoginToken(token));
-};
-
-/**
- * 将登录信息写入localStorge
- * @param username
- * @param token
- */
-const cacheLoginInfo = (username: string, token: string) => {
-  localStorage.setItem('username', username);
-  localStorage.setItem('token', token);
 };
 
 const clearLoginInfo = () => {
@@ -102,16 +85,6 @@ class Login extends React.Component<{}, State> {
   componentDidMount() {
     this.unsubscribe = store.subscribe(() => this.forceUpdate());
     this.inputUsernameRef.current?.focus();
-    //读取缓存验证信息
-    checkLoginHis()
-      .then(flag => {
-        if (flag) {
-          gotoManagementPage();
-        }
-      })
-      .catch(err => {
-        console.log(err);
-      });
   }
 
   componentWillUnmount() {
@@ -139,6 +112,7 @@ class Login extends React.Component<{}, State> {
       })
       .catch(err => {
         console.log(err);
+        message.error(err);
       })
       .finally(() => {
         if (!this.state.isLeave) {
@@ -217,9 +191,6 @@ class Login extends React.Component<{}, State> {
             </Button>
           </Form.Item>
         </Form>
-        <Link to="/management/welcome">
-          to Welcome {store.getState().login.username}
-        </Link>
         {/* <div className={styles.cp}>
         {constant.copyright}
       </div> */}
