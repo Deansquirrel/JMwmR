@@ -19,4 +19,6 @@
 /src/.umi-test
 /.env.local
 
+/.vscode/
+
 .umirc.local.ts
