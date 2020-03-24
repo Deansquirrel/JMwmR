@@ -2,9 +2,10 @@ import { applyMiddleware, combineReducers, createStore } from "redux";
 
 import { loggerMiddleware, ywMiddleware } from "./middleware";
 import { login } from "./loginReducer";
+import { menu } from "./menuReducer";
 
 const store = createStore(
-    combineReducers({ login }),
+    combineReducers({ login, menu }),
     // {
     //     login: {
     //         username: ""
