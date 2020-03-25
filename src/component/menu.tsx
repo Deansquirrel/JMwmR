@@ -31,15 +31,6 @@ declare interface IState {
 
 export class SysMenu extends React.Component<{}, IState> {
 
-    constructor(props: Readonly<{}>) {
-        super(props);
-        const { defaultOpenKeys, defaultSelectedKeys } = store.getState().menu;
-        this.state = {
-            openKey: defaultOpenKeys,
-            selectedKey: defaultSelectedKeys,
-        };
-    }
-
     unsubscribe: any;
     componentDidMount() {
         this.unsubscribe = store.subscribe(() => this.forceUpdate());
@@ -48,12 +39,25 @@ export class SysMenu extends React.Component<{}, IState> {
     componentWillUnmount() {
         this.unsubscribe();
     }
+
     render() {
-        const { openKey, selectedKey } = this.state;
+        const currOpenKeys = store.getState().menu.defaultOpenKeys;
         return (
             <Menu
-                defaultOpenKeys={openKey}
-                defaultSelectedKeys={selectedKey}
+                openKeys={store.getState().menu.defaultOpenKeys}
+                selectedKeys={store.getState().menu.defaultSelectedKeys}
+                onOpenChange={(openKeys) => {
+                    if (openKeys.length < 1) {
+                        store.dispatch(DefaultOpenKeys(openKeys));
+                        return;
+                    }
+                    const latestOpenKey = openKeys.find(key => currOpenKeys.indexOf(key) === -1);
+                    if (latestOpenKey === undefined) {
+                        store.dispatch(DefaultOpenKeys([]));
+                    } else {
+                        store.dispatch(DefaultOpenKeys([latestOpenKey]));
+                    }
+                }}
                 theme={"dark"}
                 mode={"inline"}
             >
