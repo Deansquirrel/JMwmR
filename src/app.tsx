@@ -2,6 +2,8 @@
 import constant from '@/component/constant';
 import { history } from 'umi';
 
+import 'moment/locale/zh-cn';
+
 import store from '@/data/store';
 
 export function onRouteChange({

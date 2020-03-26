@@ -80,7 +80,7 @@ export class SysMenu extends React.Component<{}, IState> {
                     <Menu.Item
                         key={selectedKeysList.recordAdd}
                         onClick={() => {
-                            history.push('/management/hello');
+                            history.push('/management/record/add');
                         }}
                     >
                         <span>记录登记</span>
@@ -88,7 +88,7 @@ export class SysMenu extends React.Component<{}, IState> {
                     <Menu.Item
                         key={selectedKeysList.recordDetailSearch}
                         onClick={() => {
-                            history.push('/management/hello');
+                            history.push('/management/record/detail');
                         }}
                     >
                         <span>明细查询</span>
@@ -96,7 +96,7 @@ export class SysMenu extends React.Component<{}, IState> {
                     <Menu.Item
                         key={selectedKeysList.recordSummarySearch}
                         onClick={() => {
-                            history.push('/management/hello');
+                            history.push('/management/record/summary');
                         }}
                     >
                         <span>汇总查询</span>
@@ -114,7 +114,7 @@ export class SysMenu extends React.Component<{}, IState> {
                     <Menu.Item
                         key={selectedKeysList.categoryAdd}
                         onClick={() => {
-                            history.push('/management/hello');
+                            history.push('/management/category/add');
                         }}
                     >
                         <span>添加分类</span>
@@ -122,7 +122,7 @@ export class SysMenu extends React.Component<{}, IState> {
                     <Menu.Item
                         key={selectedKeysList.categoryList}
                         onClick={() => {
-                            history.push('/management/hello');
+                            history.push('/management/category/list');
                         }}
                     >
                         <span>分类查询</span>

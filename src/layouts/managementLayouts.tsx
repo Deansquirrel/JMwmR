@@ -8,7 +8,7 @@ import { Layout, Menu } from 'antd';
 import styles from './managementLayouts.less';
 const { Header, Footer, Sider, Content } = Layout;
 
-import { HomeOutlined, BookOutlined, MenuUnfoldOutlined, MenuFoldOutlined, MenuOutlined, SettingOutlined, PieChartOutlined } from '@ant-design/icons';
+import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
 
 import constant from "@/component/constant";
 import { SiderProps } from 'antd/lib/layout/Sider';
@@ -68,13 +68,14 @@ class ManagementLayouts extends React.Component<{}, IState> {
             <Layout style={{ overflowY: 'scroll' }}>
                 <Sider
                     breakpoint="lg"
-                    // collapsedWidth="0"
+                    // collapsedWidth={collapsedWidth}
                     className={styles.sider}
                     ref={this.sRef}
                     onCollapse={collapsed => {
                         this.setState({
                             collapsed: collapsed,
                         });
+
                     }}
                     collapsed={this.state.collapsed}
                 >
