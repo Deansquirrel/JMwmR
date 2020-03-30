@@ -25,11 +25,11 @@ const checkLogin = async (
     }),
   })
     .then(response => response.json())
-    .then(function (data) {
+    .then(function(data) {
       if (data.code == 0) {
         recordLoginInfo(username, temp_token);
         // cacheLoginInfo(username, temp_token);
-        message.info("登录成功");
+        message.info('登录成功');
         return true;
       } else {
         if (data.msg != undefined) {
@@ -40,7 +40,7 @@ const checkLogin = async (
         return false;
       }
     })
-    .catch(function (e) {
+    .catch(function(e) {
       console.log(e);
       message.error(e);
       clearLoginInfo();
@@ -60,7 +60,7 @@ const recordLoginInfo = (username: string, token: string) => {
   store.dispatch(LoginToken(token));
 };
 
-const clearLoginInfo = () => {
+export const clearLoginInfo = () => {
   store.dispatch(LoginUserName(''));
   store.dispatch(LoginIsLogin(false));
 };
