@@ -14,51 +14,7 @@ import { DefaultOpenKeys, DefaultSelectedKeys } from '@/data/menuReducer';
 
 import { selectedKeysList, openKeysList } from '@/component/menu';
 import { FormInstance } from 'antd/lib/form';
-
-declare interface IRecord {
-  date: string;
-  money: number;
-  category: number;
-  remark: string;
-}
-
-const addRecord = async (record: IRecord): Promise<boolean> => {
-  return fetch('/api/record/add', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      date: record.date,
-      money: record.money,
-      category: record.category,
-      remark: record.remark == undefined ? '' : record.remark,
-    }),
-  })
-    .then(response => response.json())
-    .then(function(data) {
-      if (data.code == 0) {
-        if (data.msg != undefined) {
-          message.info(data.msg);
-        } else {
-          message.info('success');
-        }
-        return true;
-      } else {
-        if (data.msg != undefined) {
-          message.warn(data.msg);
-        } else {
-          message.warn('response has err without errmsg');
-        }
-        return false;
-      }
-    })
-    .catch(function(e) {
-      console.log(e);
-      message.error(e);
-      return false;
-    });
-};
+import { RecordHelper, IResponseData } from '@/interface/record';
 
 const menuInit = () => {
   store.dispatch(DefaultOpenKeys([openKeysList.recordManagement]));
@@ -102,7 +58,7 @@ const validateMessages = {
 
 declare interface IState {
   isSubmiting: boolean;
-  isLeave: boolean;
+  // isLeave: boolean;
 }
 
 type State = Readonly<IState>;
@@ -110,50 +66,54 @@ type State = Readonly<IState>;
 class RecordAdd extends React.Component<{}, State> {
   unsubscribe: any;
 
+  unmont: boolean | undefined;
+
   inputMoneyRef = React.createRef<Input>();
   inputRemarkRef = React.createRef<Input>();
   formRef = React.createRef<FormInstance>();
 
+  recrodHelper = new RecordHelper();
+
   componentDidMount() {
     menuInit();
     this.unsubscribe = store.subscribe(() => this.forceUpdate());
+    this.unmont = false;
   }
 
   componentWillUnmount() {
     this.unsubscribe();
+    this.unmont = true;
   }
 
   constructor(props: Readonly<{}>) {
     super(props);
     this.state = {
       isSubmiting: false,
-      isLeave: false,
     };
   }
 
   onFinish = (values: any) => {
     this.setState({ isSubmiting: true });
-    addRecord({
-      date: values.record.date.format('YYYY-MM-DD'),
-      money: values.record.money,
-      category: values.record.category,
-      remark: values.record.remark,
-    })
-      .then(flag => {
-        console.log(flag);
-        if (flag) {
-          this.formRef.current?.resetFields();
+    this.recrodHelper.add(
+      {
+        date: values.record.date.format('YYYY-MM-DD'),
+        money: values.record.money,
+        category: values.record.category,
+        remark: values.record.remark,
+      },
+      (resp: IResponseData) => {
+        if (resp.code == 0) {
+          message.info(resp.msg == undefined ? 'success' : resp.msg);
+        } else {
+          message.warn(resp.msg == undefined ? 'failed' : resp.msg);
         }
-      })
-      .catch(err => {
-        console.log(err);
-        message.error(err);
-      })
-      .finally(() => {
-        if (!this.state.isLeave) {
+      },
+      () => {
+        if (this.unmont == false) {
           this.setState({ isSubmiting: false });
         }
-      });
+      },
+    );
   };
 
   render() {
