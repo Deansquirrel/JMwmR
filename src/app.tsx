@@ -1,25 +1,25 @@
 // import React from 'react';
-import constant from '@/component/constant';
+// import constant from '@/component/constant';
 import { history } from 'umi';
 
 import 'moment/locale/zh-cn';
 
-import store from '@/data/store';
+// import store from '@/data/store';
 
-export function onRouteChange({
-  location,
-}: {
-  location: { pathname: string };
-}) {
-  document.title = constant.pageTitle + ' ' + constant.version;
-  //TODO 页面渲染前在线验证权限
-  const state = store.getState();
-  if (location.pathname != '/login') {
-    if (!state.login.isLogin) {
-      history.push('/login');
-    }
-  }
-}
+// export function onRouteChange({
+//   location,
+// }: {
+//   location: { pathname: string };
+// }) {
+//   document.title = constant.pageTitle + ' ' + constant.version;
+//   //TODO 页面渲染前在线验证权限
+//   const state = store.getState();
+//   if (location.pathname != '/login') {
+//     if (!state.login.isLogin) {
+//       history.push('/login');
+//     }
+//   }
+// }
 
 export function render(oldRender: () => void) {
   // const state = store.getState();
