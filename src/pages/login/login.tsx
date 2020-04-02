@@ -5,13 +5,83 @@ import BaseComponent from '@/component/BaseComponent';
 import { Form, Input, Button, message } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
+import { history } from 'umi';
+
+import store from '@/data_cache/store';
+
+import user from '@/service_interface/user';
+
 declare interface IState {
   isLoging: boolean;
 }
 
 type State = Readonly<IState>;
 
+const checkLoginState = () => {
+  const { username, token } = store.getState().user;
+  if (
+    username != undefined &&
+    username.trim() != '' &&
+    token != undefined &&
+    token.trim() != ''
+  ) {
+    //TODO 登录状态判断 需检查token有效性
+    return true;
+  } else {
+    return false;
+  }
+};
+
+const gotoSuccessPage = () => {
+  history.push('/management/welcome');
+};
+
 class Login extends BaseComponent<{}, State> {
+  constructor(props: Readonly<{}>) {
+    super(props);
+    this.state = {
+      isLoging: false,
+    };
+  }
+
+  componentDidMount() {
+    this.setState({
+      isLoging: false,
+    });
+    if (checkLoginState()) {
+      gotoSuccessPage();
+    }
+  }
+
+  onFinish = (username: string, password: string) => {
+    this.setState({
+      isLoging: true,
+    });
+    user
+      .checkLogin(username, password)
+      .then(function(data) {
+        console.log(data);
+        if (data.code == 0) {
+          message.info(
+            data.msg == undefined || data.msg.trim() == ''
+              ? '登录成功'
+              : data.msg,
+          );
+          //TODO 成功登录后，变更登录状态病缓存登录返回信息
+          console.log(data.data == undefined ? 'no data' : data.data);
+          //TODO 登录成功后跳转页面
+          gotoSuccessPage();
+        } else {
+          message.warn(data.msg);
+        }
+      })
+      .finally(() => {
+        this.setState({
+          isLoging: false,
+        });
+      });
+  };
+
   render() {
     return (
       <div className={styles.login_div}>
@@ -21,9 +91,7 @@ class Login extends BaseComponent<{}, State> {
         <Form
           name={'frm_login'}
           className={styles.login_div_form}
-          onFinish={values => {
-            console.log(values);
-          }}
+          onFinish={values => this.onFinish(values.username, values.password)}
         >
           <Form.Item
             name={'username'}
@@ -59,6 +127,7 @@ class Login extends BaseComponent<{}, State> {
           </Form.Item>
           <Form.Item>
             <Button
+              loading={this.state.isLoging}
               style={{ width: '100%', marginTop: '2rem' }}
               type={'primary'}
               size={'large'}

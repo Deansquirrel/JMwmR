@@ -1,5 +1,7 @@
 import mockjs from 'mockjs';
 
+import { uuid } from '../src/component/tool';
+
 export default {
   'GET /api/user': { users: [1, 2] },
   '/api/users/1': { id: 1 },
@@ -14,6 +16,10 @@ export default {
         res.json({
           code: 0,
           msg: 'success',
+          data: {
+            username: data.username,
+            token: uuid(),
+          },
         });
       } else {
         res.json({
@@ -21,7 +27,7 @@ export default {
           msg: 'login failed',
         });
       }
-    }, 100);
+    }, 1000);
   },
   'POST /api/record/add': (req: any, res: any) => {
     const data = req.body;
