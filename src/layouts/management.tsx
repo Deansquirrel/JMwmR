@@ -9,6 +9,8 @@ const { Header, Footer, Sider, Content } = Layout;
 
 import { history } from 'umi';
 
+import store from '@/data_cache/store';
+
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
@@ -16,6 +18,7 @@ import {
 } from '@ant-design/icons';
 import constant from '@/global/constant';
 import MyMenu from './menu';
+import { UserInfo } from '@/data_cache/user';
 
 declare interface IState {
   collapsed: boolean;
@@ -96,6 +99,7 @@ class ManagementLayouts extends BaseComponent<{}, IState> {
               className={styles.layout_managemnet_logout}
               onClick={() => {
                 //TODO 清楚缓存的登录信息
+                store.dispatch(UserInfo(undefined));
                 // clearLoginInfo();
                 history.push('/');
               }}

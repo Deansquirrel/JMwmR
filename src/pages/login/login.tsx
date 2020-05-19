@@ -10,6 +10,7 @@ import { history } from 'umi';
 import store from '@/data_cache/store';
 
 import user from '@/service_interface/user';
+import { UserInfo } from '@/data_cache/user';
 
 declare interface IState {
   isLoging: boolean;
@@ -17,20 +18,15 @@ declare interface IState {
 
 type State = Readonly<IState>;
 
-const checkLoginState = () => {
-  const { username, token } = store.getState().user;
-  if (
-    username != undefined &&
-    username.trim() != '' &&
-    token != undefined &&
-    token.trim() != ''
-  ) {
-    //TODO 登录状态判断 需检查token有效性
-    return true;
-  } else {
-    return false;
-  }
-};
+// const checkLoginState = () => {
+//   const { user_info } = store.getState().user;
+//   if (user_info != undefined) {
+//     //TODO 登录状态判断 需检查token有效性
+//     return true;
+//   } else {
+//     return false;
+//   }
+// };
 
 const gotoSuccessPage = () => {
   history.push('/management/welcome');
@@ -48,9 +44,6 @@ class Login extends BaseComponent<{}, State> {
     this.setState({
       isLoging: false,
     });
-    if (checkLoginState()) {
-      gotoSuccessPage();
-    }
   }
 
   onFinish = (username: string, password: string) => {
@@ -67,9 +60,11 @@ class Login extends BaseComponent<{}, State> {
               ? '登录成功'
               : data.msg,
           );
-          //TODO 成功登录后，变更登录状态病缓存登录返回信息
-          console.log(data.data == undefined ? 'no data' : data.data);
-          //TODO 登录成功后跳转页面
+          //成功登录后，变更登录状态并缓存登录返回信息
+          if (data.data != undefined) {
+            store.dispatch(UserInfo(data.data));
+          }
+          //登录成功后跳转页面
           gotoSuccessPage();
         } else {
           message.warn(data.msg);

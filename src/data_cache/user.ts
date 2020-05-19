@@ -1,16 +1,17 @@
+import { IUserInfo } from '@/service_interface/user.d';
+
 const constants = {
-  UserName: 'USER_NAME',
-  Token: 'TOKEN',
+  UserInfo: 'USER_INFO',
 };
 
 export interface IUserState {
-  username: string | undefined;
-  token: string | undefined;
+  user_info: IUserInfo | undefined;
+  // expire_date: Date;
 }
 
 const userInitialState: IUserState = {
-  username: undefined,
-  token: undefined,
+  user_info: undefined,
+  // expire_date: new Date(),
 };
 
 declare interface IUserAction {
@@ -18,13 +19,8 @@ declare interface IUserAction {
   data: any;
 }
 
-export const UserUserName = (data: string): IUserAction => ({
-  type: constants.UserName,
-  data,
-});
-
-export const UserToken = (data: string): IUserAction => ({
-  type: constants.Token,
+export const UserInfo = (data: IUserInfo | undefined): IUserAction => ({
+  type: constants.UserInfo,
   data,
 });
 
@@ -33,13 +29,9 @@ export const user = (
   action: IUserAction,
 ): IUserState => {
   switch (action.type) {
-    case constants.UserName:
+    case constants.UserInfo:
       return Object.assign({}, state, {
         username: action.data,
-      });
-    case constants.Token:
-      return Object.assign({}, state, {
-        token: action.data,
       });
     default:
       return state;
