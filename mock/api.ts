@@ -17,7 +17,7 @@ export default {
           code: 0,
           msg: 'success',
           data: {
-            username: data.username,
+            user: data.username,
             // token: uuid(),
           },
         });
