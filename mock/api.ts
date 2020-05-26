@@ -11,15 +11,16 @@ export default {
   }),
   'POST /api/login': (req: any, res: any) => {
     const data = req.body;
+    console.log('data', data);
     setTimeout(() => {
       if (data.username == 'yuansong' && data.password == 'yuansong') {
         res.json({
           code: 0,
           msg: 'success',
-          data: {
-            user: data.username,
-            // token: uuid(),
-          },
+          // data: {
+          //   user: data.username,
+          //   // token: uuid(),
+          // },
         });
       } else {
         res.json({
@@ -27,7 +28,7 @@ export default {
           msg: 'login failed',
         });
       }
-    }, 1000);
+    }, 3000);
   },
   'POST /api/record/add': (req: any, res: any) => {
     const data = req.body;

@@ -5,6 +5,7 @@ import BaseComponent from '@/component/BaseComponent';
 import { Form, Input, Button, message } from 'antd';
 
 import { history } from 'umi';
+import { IResponseMessageSimple } from '@/type/Message';
 
 declare interface IState {
   isLoging: boolean;
@@ -31,38 +32,37 @@ class Login extends BaseComponent<{}, State> {
       isLoging: true,
     });
 
-    setTimeout(
-      () =>
-        this.setState({
-          isLoging: false,
+    try {
+      fetch('/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: username,
+          password: password,
         }),
-      3000,
-    );
-    // user
-    //     .checkLogin(username, password)
-    //     .then(function (data) {
-    //         console.log(data);
-    //         if (data.code == 0) {
-    //             message.info(
-    //                 data.msg == undefined || data.msg.trim() == ''
-    //                     ? '登录成功'
-    //                     : data.msg,
-    //             );
-    //             //成功登录后，变更登录状态并缓存登录返回信息
-    //             if (data.data != undefined) {
-    //                 store.dispatch(UserInfo(data.data));
-    //             }
-    //             //登录成功后跳转页面
-    //             gotoSuccessPage();
-    //         } else {
-    //             message.warn(data.msg);
-    //         }
-    //     })
-    //     .finally(() => {
-    //         this.setState({
-    //             isLoging: false,
-    //         });
-    //     });
+      })
+        .then(response => response.json())
+        .catch(e => console.log('error', e))
+        .then((data: IResponseMessageSimple) => {
+          console.log(data);
+          if (data.code == 0) {
+            var msg = '登录成功';
+            if (data.msg != '') msg = data.msg;
+            console.log(msg);
+          } else {
+            console.log('login error:[%d]%s', data.code, data.msg);
+          }
+        })
+        .finally(() =>
+          this.setState({
+            isLoging: false,
+          }),
+        );
+    } catch (e) {
+      console.log('request failed', e);
+    }
   };
 
   render() {

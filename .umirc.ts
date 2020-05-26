@@ -26,7 +26,7 @@ export default defineConfig({
         // { path: 'record/summary', exact: true, component: '@/pages/management/record/summarySearch' },
         // { path: 'category/add', exact: true, component: '@/pages/management/category/add' },
         // { path: 'category/list', exact: true, component: '@/pages/management/category/list' },
-        // { path: '*', component: '@/pages/404' },
+        { path: '*', component: '@/pages/404' },
       ],
     },
   ],
