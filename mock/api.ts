@@ -1,6 +1,6 @@
 import mockjs from 'mockjs';
 
-// import { uuid } from '../src/component/tool';
+import { uuid } from '../src/component/CommonTools';
 
 export default {
   'GET /api/user': { users: [1, 2] },
@@ -12,15 +12,18 @@ export default {
   'POST /api/login': (req: any, res: any) => {
     const data = req.body;
     console.log('data', data);
+    const authorization = req.headers.authorization;
+    console.log(authorization);
+    console.log('TODO check authorization');
     setTimeout(() => {
       if (data.username == 'yuansong' && data.password == 'yuansong') {
         res.json({
           code: 0,
           msg: 'success',
-          // data: {
-          //   user: data.username,
-          //   // token: uuid(),
-          // },
+          data: {
+            username: data.username,
+            token: uuid(),
+          },
         });
       } else {
         res.json({
