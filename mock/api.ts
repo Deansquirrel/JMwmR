@@ -16,12 +16,15 @@ export default {
     console.log(authorization);
     console.log('TODO check authorization');
     setTimeout(() => {
-      if (data.username == 'yuansong' && data.password == 'yuansong') {
+      if (
+        (data.username == 'yuansong' && data.password == 'yuansong') ||
+        authorization != ''
+      ) {
         res.json({
           code: 0,
           msg: 'success',
           data: {
-            username: data.username,
+            username: data.username == undefined ? 'yuansong' : data.username,
             token: uuid(),
           },
         });

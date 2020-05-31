@@ -14,7 +14,7 @@ export default defineConfig({
     {
       path: '/management',
       exact: false,
-      component: '@/layouts/common',
+      component: '@/layouts/management',
       routes: [
         {
           path: 'welcome',

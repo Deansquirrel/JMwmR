@@ -1,0 +1,62 @@
+@import '../style/color.less';
+
+@bannerHeight: 4rem;
+@bannerFontSize: 1.8rem;
+@marginSides: 10rem;
+@radius: 0.5rem;
+
+body {
+  background-color: rgba(239, 243, 246);
+  margin: 0;
+  padding: 0;
+  min-width: 81.25rem;
+  overflow-y: scroll;
+}
+
+.div_banner {
+  width: 100%;
+  height: @bannerHeight;
+  background-color: #color[theme];
+}
+
+.div_banner_content {
+  height: 100%;
+}
+
+.div_content {
+  margin: 0 @marginSides 0;
+}
+
+.h1_title {
+  margin: auto;
+  color: white;
+  font-size: @bannerFontSize;
+  line-height: @bannerHeight;
+  padding-left: 1rem;
+}
+
+.div_left {
+  width: 100%;
+  background-color: white;
+  padding-top: @radius;
+  padding-bottom: @radius;
+  border-radius: @radius;
+}
+
+.div_right {
+  width: 100%;
+  min-height: 30rem;
+  background-color: white;
+  border-radius: @radius;
+}
+
+.div_user {
+  width: 100%;
+  background-color: white;
+  border-radius: @radius;
+  height: 2.5rem;
+  line-height: 2.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  overflow: hidden;
+}

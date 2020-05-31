@@ -1,7 +1,6 @@
 import { IResponseMessage } from '@/type/Message';
 import Constant from '@/component/Constant';
 import { message } from 'antd';
-import { util } from 'prettier';
 
 export enum Method {
   GET,

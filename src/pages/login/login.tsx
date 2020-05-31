@@ -69,43 +69,6 @@ class Login extends BaseComponent<{}, State> {
           isLoging: false,
         });
       });
-
-    // HttpUtils.request(Method.POST, '/api/login', data)
-    //   .then((_response: IResponseMessage<string> => console.log(data)))
-    //   .catch (e => console.log('err', e))
-    //   .finally(() => console.log('finally'));
-
-    // try {
-    //   fetch('/api/login', {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify({
-    //       username: username,
-    //       password: password,
-    //     }),
-    //   })
-    //     .then(response => response.json())
-    //     .catch(e => console.log('error', e))
-    //     .then((data: IResponseMessage<ILoginResponse>) => {
-    //       console.log(data);
-    //       if (data.code == 0) {
-    //         var msg = '登录成功';
-    //         if (data.msg != '') msg = data.msg;
-    //         console.log(msg);
-    //       } else {
-    //         console.log('login error:[%d]%s', data.code, data.msg);
-    //       }
-    //     })
-    //     .finally(() =>
-    //       this.setState({
-    //         isLoging: false,
-    //       }),
-    //     );
-    // } catch (e) {
-    //   console.log('request failed', e);
-    // }
   };
 
   render() {
