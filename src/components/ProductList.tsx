@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import { Table, Space, Button, Popconfirm } from 'antd';
 import { IProduct } from '@/model/products';
 
+import store from '@/data/store';
+
 const ProductList = () => {
   const columns = [
     {
