@@ -2,8 +2,10 @@ import { applyMiddleware, combineReducers, createStore } from 'redux';
 
 import { loggerMiddleware, ywMiddleware } from './middleware';
 
+import { test } from './model/ProductListModel';
+
 const store = createStore(
-  combineReducers({ user, menu }),
+  combineReducers({ test }),
   // {
   //     login: {
   //         username: ""

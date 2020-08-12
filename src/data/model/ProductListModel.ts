@@ -3,11 +3,16 @@ export interface IProduct {
   name: string;
 }
 
-export interface ITestState {
+export interface IProductListState {
   list: Array<IProduct>;
 }
 
-const testInitialState: ITestState = {
+export interface IProductListAction {
+  type: string;
+  data: any;
+}
+
+const initialState: IProductListState = {
   list: [
     { name: 'dva', id: 1 },
     { name: 'antd', id: 2 },
@@ -15,27 +20,47 @@ const testInitialState: ITestState = {
 };
 
 const constants = {
-  test: 'TEST',
+  del: 'DELETE',
 };
 
-export interface ITestAction {
-  type: string;
-  data: any;
-}
+export const ProductListActionDelete = (id: number): IProductListAction => ({
+  type: constants.del,
+  data: id,
+});
 
-export const test = (
-  state = testInitialState,
-  action: ITestAction,
-): ITestState => {
+export const ProductListReducer = (
+  state = initialState,
+  action: IProductListAction,
+) => {
   switch (action.type) {
-    case constants.test:
-      return Object.assign({}, state, {
-        list: action.data,
-      });
-    default:
-      return state;
+    case constants.del:
+      if (!action.hasOwnProperty('id')) return state;
+      return state.list.filter(item => item.id != action.data);
   }
 };
+
+// const constants = {
+//   test: 'TEST',
+// };
+
+// export interface ITestAction {
+//   type: string;
+//   data: any;
+// }
+
+// export const test = (
+//   state = testInitialState,
+//   action: ITestAction,
+// ): ITestState => {
+//   switch (action.type) {
+//     case constants.test:
+//       return Object.assign({}, state, {
+//         list: action.data,
+//       });
+//     default:
+//       return state;
+//   }
+// };
 
 // export const user = (
 //   state = userInitialState,
