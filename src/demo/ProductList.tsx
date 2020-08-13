@@ -48,7 +48,6 @@ const products = () => {
 class ProductList extends BaseComponent {
   render() {
     const p = products();
-    console.log(p, p.length);
     return <Table dataSource={p} columns={columns} />;
   }
 }

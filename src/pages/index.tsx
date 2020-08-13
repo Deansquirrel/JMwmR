@@ -7,7 +7,6 @@ export default () => {
   return (
     <div>
       <ProductList />
-      {/* // onDelete={onDelete} products={products}  */}
     </div>
   );
 };
