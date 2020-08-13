@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './index.less';
 
-import ProductList from '@/components/ProductList';
+import ProductList from '@/demo/ProductList';
 
 export default () => {
   return (
@@ -11,11 +11,3 @@ export default () => {
     </div>
   );
 };
-
-// export default connect(({ products }) => ({
-//   products,
-// }))(Products);
-
-// // export default connect(({ products }) => ({
-// //   products,
-// // }))(Products);
