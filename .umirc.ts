@@ -4,5 +4,9 @@ export default defineConfig({
   nodeModulesTransform: {
     type: 'none',
   },
-  routes: [{ path: '/', component: '@/pages/index' }],
+  routes: [
+    { path: '/', exact: true, redirect: '/message' },
+    { path: '/table', exact: true, component: '@/pages/index' },
+    { path: '/message', exact: true, component: '@/demo/PageSocket' },
+  ],
 });
