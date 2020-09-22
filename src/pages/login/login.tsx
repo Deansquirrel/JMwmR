@@ -8,9 +8,17 @@ import styles from './login.less';
 import './login.css';
 import constants from '@/components/constants';
 
+import * as httpHelper from '@/components/HttpHelper';
+
 interface IState {
   loading: boolean;
 }
+
+interface LoginInfo {
+  token: string;
+}
+
+const url_login_checkuser = '/api/login';
 
 class Login extends BaseWithStoreComponent<{}, IState> {
   ref_input_username: RefObject<Input> = React.createRef<Input>();
@@ -32,17 +40,33 @@ class Login extends BaseWithStoreComponent<{}, IState> {
     }
   }
 
-  handleSubmit = (values: any) => {
+  handleSubmit = async (values: any) => {
     console.log(values['username'], values['password']);
     this.setState({
       loading: true,
     });
 
-    setTimeout(() => {
-      this.setState({
-        loading: false,
-      });
-    }, 3000);
+    const data = await httpHelper.HttpPostJson<LoginInfo>(url_login_checkuser, {
+      username: values['username'],
+      password: values['password'],
+    });
+
+    if (data.code === 0) {
+      console.log('login success');
+      console.log(data.data?.token);
+    } else {
+      console.log('login failed');
+    }
+
+    this.setState({
+      loading: false,
+    });
+
+    // setTimeout(() => {
+    //   this.setState({
+    //     loading: false,
+    //   });
+    // }, 3000);
   };
 
   render() {

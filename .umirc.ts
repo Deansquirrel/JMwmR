@@ -8,7 +8,7 @@ export default defineConfig({
   nodeModulesTransform: {
     type: 'none',
   },
-  mock: false,
+  mock: {},
   routes: [
     { path: '/', exact: true, redirect: '/login' },
 

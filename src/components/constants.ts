@@ -1,5 +1,5 @@
 const constatns = {
-  companyName: 'ABCDEF',
+  companyName: 'Deansquirrel',
 };
 
 export default constatns;
