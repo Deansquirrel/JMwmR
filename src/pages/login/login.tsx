@@ -34,7 +34,6 @@ class Login extends BaseWithStoreComponent<{}, IState> {
     if (super.componentDidMount !== undefined) {
       super.componentDidMount();
     }
-    // this.ref_input_username.current?.focus()
     if (this.ref_input_username.current !== undefined) {
       this.ref_input_username.current?.focus();
     }

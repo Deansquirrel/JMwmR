@@ -11,10 +11,9 @@ export default defineConfig({
   mock: {},
   routes: [
     { path: '/', exact: true, redirect: '/login' },
-
     {
       path: '/',
-      component: '@/layouts/Root',
+      component: '@/pages/Root',
       exact: false,
       routes: [
         {
@@ -23,30 +22,24 @@ export default defineConfig({
           component: '@/pages/login/login',
         },
         {
-          path: '/test',
-          exact: true,
-          component: '@/pages/test/test',
+          path: '/management/',
+          exact: false,
+          component: '@/pages/management/Management',
+          routes: [
+            {
+              path: '/management/welcome',
+              exact: true,
+              component: '@/pages/management/welcome/Welcome',
+            },
+          ],
         },
+        //   {
+        //     path: '/test',
+        //     exact: true,
+        //     component: '@/pages/test/test',
+        //   },
       ],
     },
-
-    // {
-    //   path: '/login',
-    //   component: '@/layouts/Common',
-    //   routes: [
-    //     {
-    //       path: '/',
-    //       exact: true,
-    //       component: "@/pages/login/login"
-    //     },
-    //   ],
-
-    //   // layou
-    //   // component: '@/pages/login/login'
-    //   // routes: [
-
-    //   //   // ],
-    // },
   ],
 
   // nodeModulesTransform: {
